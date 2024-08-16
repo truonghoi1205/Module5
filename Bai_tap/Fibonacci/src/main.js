@@ -1,10 +1,14 @@
-let number1 = 0;
-let number2 = 1;
-let sum = 0;
-for (let i = 1; i < 19; i++) {
-    tong = number1 + number2;
-    number1 = number2;
-    number2 = tong;
-    sum = tong + number1 + number2 - 1
+function fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
 }
-console.log(sum);
+var n = 10; // Số lượng số Fibonacci bạn muốn hiển thị
+var sum = 0;
+for (var i = 0; i < n; i++) {
+    var fib = fibonacci(i);
+    console.log(fib);
+    sum += fib;
+}
+console.log("Tổng các số Fibonacci:", sum);
