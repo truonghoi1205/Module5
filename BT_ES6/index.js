@@ -53,22 +53,22 @@
 // console.log(sum(1, 2, 3, 4));
 
 // 9. Sử dụng Rest parameter để nhận vào một danh sách tên và trả về chuỗi định dạng "Welcome, [tên1], [tên2], [tên3], ..." cho tất cả các tên.
-function string(...name) {
-    return name.reduce((total, current) => `${total} , ${current}`)
-}
-console.log(`welcome, ${string('a','b','c','d')}`);
+// function string(...name) {
+//     return name.reduce((total, current) => `${total} , ${current}`)
+// }
+// console.log(`welcome, ${string('a','b','c','d')}`);
 
 
 // 10. Tạo một đối tượng "book" với thuộc tính "title", "author" và "pages" bằng cách sử dụng Enhanced object literals.Đối tượng "book"
 // cũng có phương thức "displayInfo" để in ra thông tin về sách.
 
-const book = {
-    title: 'Hướng dẫn nấu ăn',
-    author: 'Lê Văn Cường',
-    pages: 10,
-    displayInfo: function() {
-        console.log(`Sách: ${this.title}, tác giả: ${this.author}, số trang: ${this.pages}`);
-      }
-}
+// const book = {
+//     title: 'Hướng dẫn nấu ăn',
+//     author: 'Lê Văn Cường',
+//     pages: 10,
+//     displayInfo: function() {
+//         console.log(`Sách: ${this.title}, tác giả: ${this.author}, số trang: ${this.pages}`);
+//       }
+// }
 
-book.displayInfo();
+// book.displayInfo();
