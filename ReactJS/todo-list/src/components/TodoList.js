@@ -37,10 +37,7 @@ class TodoList extends Component {
             value={this.state.item}
             onChange={this.handleChange}
           />
-          <button
-            className="ms-2 btn btn-sm btn-primary"
-            onClick={this.handleAddItem}
-          >
+          <button className="ms-2 btn btn-sm btn-primary"onClick={this.handleAddItem}>
             Add
           </button>
         </div>

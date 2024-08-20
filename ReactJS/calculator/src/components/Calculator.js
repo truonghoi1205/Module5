@@ -42,45 +42,17 @@ function Calculator() {
     <div className="container w-auto shadow-sm w-25 p-5 text-center mt-5">
       <h2>Máy tính cá nhân</h2>
       <div className="mb-2">
-        <input
-          type="number"
-          value={input1}
-          onChange={(e) => setInput1(e.target.value)}
-        />
+        <input type="number"value={input1} onChange={(e) => setInput1(e.target.value)}/>
       </div>
       <div>
-        <input
-          type="number"
-          value={input2}
-          onChange={(e) => setInput2(e.target.value)}
-        />
+        <input type="number" value={input2} onChange={(e) => setInput2(e.target.value)} />
       </div>
       <h3>Kết quả: {result}</h3>
       <div className="">
-        <button
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => handleCalculate("+")}
-        >
-          +
-        </button>
-        <button
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => handleCalculate("-")}
-        >
-          -
-        </button>
-        <button
-          className="btn btn-sm btn-secondary me-2"
-          onClick={() => handleCalculate("*")}
-        >
-          *
-        </button>
-        <button
-          className="btn btn-sm btn-secondary"
-          onClick={() => handleCalculate("/")}
-        >
-          /
-        </button>
+        <button className="btn btn-sm btn-secondary me-2" onClick={() => handleCalculate("+")}>+</button>
+        <button className="btn btn-sm btn-secondary me-2" onClick={() => handleCalculate("-")}>-</button>
+        <button className="btn btn-sm btn-secondary me-2" onClick={() => handleCalculate("*")}>*</button>
+        <button className="btn btn-sm btn-secondary" onClick={() => handleCalculate("/")}>/</button>
       </div>
     </div>
   );
