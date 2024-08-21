@@ -1,56 +1,42 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-      item: "",
-    };
-  }
+function TodoList() {
 
-  handleChange = (event) => {
-    this.setState({ item: event.target.value });
-  };
+  const [job, setJob] = useState("");
+  const [jobs, setJobs] = useState(() => {
+    const storageJobs = JSON.parse(localStorage.getItem('jobs'));
+    return storageJobs ?? [];
+  });
 
-  handleAddItem = () => {
-    if (this.state.item.trim() !== "") {
-      this.setState((prevState) => ({
-        list: [...prevState.list, prevState.item],
-        item: "",
-      }));
-    } else {
-      alert("Vui lòng nhập nội dung.");
+  const handleSubmit = () => {
+    if(job === '') {
+      alert("Vui lòng nhập công việc!");
+      return;
     }
+    setJobs((prev) => {
+      const newJobs = [...prev, job];
+      const jsonJobs = JSON.stringify(newJobs);
+      localStorage.setItem("jobs", jsonJobs);
+      return newJobs;
+    });
+    setJob("");
   };
 
-  render() {
-    return (
-      <div className="container mt-5 text-center">
-        <h1>ToDo List</h1>
-        <div className="d-flex justify-content-center">
-          <input
-            placeholder="Nhập todo mới"
-            className="form-control w-25"
-            type="text"
-            value={this.state.item}
-            onChange={this.handleChange}
-          />
-          <button className="ms-2 btn btn-sm btn-primary"onClick={this.handleAddItem}>
-            Add
-          </button>
-        </div>
-        <div className="text-start">
-          <ul>
-            {this.state.list.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+  return (
+    <div className="container text-center mt-5">
+      <h2>Todo-List</h2>
+      <div className="d-flex m-auto w-25">
+          <input className="form-control" placeholder="Nhập công việc" value={job} onChange={(e) => setJob(e.target.value)} />
+          <button className="btn btn-sm btn-primary ms-2 w-50" onClick={handleSubmit}>Thêm mới</button>
       </div>
-    );
-  }
+      <ul className="list-unstyled mt-3">
+        {jobs.map((job, index) => (
+          <li className="text-start ps-2 py-2 border-bottom fs-4" key={index}>{index + 1 }. {job}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default TodoList;
