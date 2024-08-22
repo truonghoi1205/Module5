@@ -19,7 +19,7 @@ function TodoList() {
 
     useEffect(() => {
         getAllTodo();
-    })
+    },[])
 
     const getAllTodo = async () => {
         let res = await todoService.getAllTodo();
