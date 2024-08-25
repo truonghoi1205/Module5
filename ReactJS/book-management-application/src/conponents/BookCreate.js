@@ -46,7 +46,7 @@ function BookCreate({onSuccess}) {
                         </div>
                         <div>
                             <label className="form-label">Số lượng: </label>
-                            <Field name="quantity" className="form-control" />
+                            <Field type='number' name="quantity" className="form-control" />
                             <ErrorMessage name="quantity" className="text-danger" component="p" />
                         </div>
                     </Form>

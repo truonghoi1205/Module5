@@ -4,13 +4,12 @@ import * as bookService from "../service/BookService.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import BookCreate from "./BookCreate.js";
 import BookUpdate from "./BookUpdate.js";
-import ModalEx from "./Modal.js";
 import { toast } from "react-toastify";
+import BookDelete from "./BookDelete.js";
 
 function BookList() {
   const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState(null);
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   useEffect(() => {
     getAllBooks();
@@ -21,19 +20,7 @@ function BookList() {
     setBooks(res);
   };
 
-  const handleDelete = async () => {
-    if (selectedBookId !== null) {
-      const success = await bookService.deleteBook(selectedBookId);
-      if (success) {
-        toast.success("Xóa sách thành công");
-        getAllBooks(); 
-      } else {
-        toast.error("Xóa sách thất bại");
-      }
-      setShowConfirmDelete(false); 
-      setSelectedBookId(null); 
-    }
-  };
+  
 
   return (
     <div className="container mt-5 shadow-sm p-3 rounded">
@@ -61,16 +48,15 @@ function BookList() {
                 <Link className="btn btn-sm btn-success me-2" to={`/books/edit/${b.id}`}>
                   Chỉnh sửa
                 </Link>
-                <ModalEx handleClick={handleDelete} title="Xóa" actionType="delete">
-                    <p className="m-0">Bạn có chắc chắn muốn xóa sách <span className="fw-bold">{b.title}</span> không?</p>
-                    <small className="text-danger">Hành động này không thể hoàn tác!</small>
-                </ModalEx>
+                  <BookDelete
+                    selectedBookId={selectedBookId}
+                    onDeleteSuccess={getAllBooks}
+                  />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      
     </div>
   );
 }

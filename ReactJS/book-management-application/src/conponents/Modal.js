@@ -1,7 +1,7 @@
 import { Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 
-function ModalEx({ handleClick, children,title,actionType  }) {
+function ModalEx({handleClick, children,title,actionType  }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -39,12 +39,12 @@ function ModalEx({ handleClick, children,title,actionType  }) {
         </Modal.Header>
         <Modal.Body>{children}</Modal.Body>
         <Modal.Footer>
-        <Button
-            variant={variant}
-            onClick={handleButtonClick}
-            className="btn-sm"
-          >
-            {text}
+          <Button
+              variant={variant}
+              onClick={handleButtonClick}
+              className="btn-sm"
+            >
+              {text}
           </Button>
         </Modal.Footer>
       </Modal>

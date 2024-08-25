@@ -1,41 +1,46 @@
 {
   "students": [
     {
-      "id": 1,
-      "name": "HaiTT1",
-      "address": "Quảng Nam",
-      "point": 9
-    },
-    {
       "id": 2,
       "name": "HaiTT2",
       "address": "Quảng Nam",
-      "point": 5
+      "point": 5,
+      "classroomId": 1
     },
     {
       "id": 3,
-      "name": "HaiTT3",
+      "name": "Nhất ngu",
       "address": "Quảng Nam",
-      "point": 7
+      "point": 7,
+      "classroomId": 2
     },
     {
       "name": "Tri",
-      "address": "Đà nẵng",
+      "address": "ád",
       "point": 6,
+      "classroomId": "1",
       "id": 4
     },
     {
-      "name": "aaa",
-      "address": "a",
+      "name": "2aa",
+      "address": "2",
       "point": 1,
+      "classroomId": "2",
       "id": 5
-    },
-    {
-      "name": "a11",
-      "address": "1",
-      "point": 1,
-      "id": 6
     }
   ],
-  "classrooms": []
+  "classrooms": [
+    {
+      "id": 1,
+      "name": "Lớp 1"
+    },
+    {
+      "id": 2,
+      "name": "Lớp 2"
+    },
+    {
+      "id": 3,
+      "name": "Lớp 3"
+    }
+  ]
 }
