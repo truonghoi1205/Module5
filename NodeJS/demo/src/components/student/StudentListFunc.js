@@ -1,87 +1,67 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import * as studentService from "../../service/StudentService";
-import * as classroomService from "../../service/ClassroomService";
-import { Table, Form, Button, Modal } from "react-bootstrap";
+import { Table, Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import Select from 'react-select'; // Import react-select
+import useStudentList from "../useStudentList";
+import DeleteStudentModal from "../DeleteStudentModal";
+import * as studentService from "../../service/StudentService";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function StudentListFunc() {
-  const [students, setStudents] = useState([]);
-  const [classrooms, setClassrooms] = useState([]);
+const StudentListFunc = () => {
   const [name, setName] = useState("");
-  const [selectedClassroomId, setSelectedClassroomId] = useState("");
+  const [selectedClassroom, setSelectedClassroom] = useState(null);
   const [minPoint, setMinPoint] = useState("");
   const [maxPoint, setMaxPoint] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
-  const [totalStudents, setTotalStudents] = useState(0);
+  const limit = 5;
 
-  useEffect(() => {
-    getAllClassrooms();
-  }, []);
+  const { students, classrooms, totalStudents } = useStudentList(
+    page,
+    limit,
+    name,
+    selectedClassroom?.value || "",  
+    minPoint,
+    maxPoint
+  );
 
-  useEffect(() => {
-    getAllStudents();
-  }, [page, name, selectedClassroomId, minPoint, maxPoint]);
-
-  const getAllStudents = async () => {
-    let { data, total } = await studentService.getAllStudents(
-      name,
-      selectedClassroomId,
-      minPoint,
-      maxPoint,
-      page,
-      limit
-    );
-    setStudents(data);
-    setTotalStudents(total);
-  };
-
-  const getAllClassrooms = async () => {
-    let res = await classroomService.getAllClassrooms();
-    setClassrooms(res);
-  };
-
-  const deleteStudent = async (id) => {
-    let isSuccess = await studentService.deleteStudent(id);
-    if (isSuccess) {
-      setStudents(students.filter((s) => s.id !== id));
-      toast.success("Xóa thành công");
-      setShowModal(false);
-    } else {
-      toast.error("Xóa thất bại");
+  const handleDeleteStudent = async (id) => {
+    try {
+      const isSuccess = await studentService.deleteStudent(id);
+      if (isSuccess) {
+        toast.success("Xóa thành công");
+        setShowModal(false);
+        setPage(1);  
+        studentService.getAllStudents();
+      } else {
+        toast.error("Xóa thất bại");
+      }
+    } catch (error) {
+      toast.error("Đã xảy ra lỗi trong quá trình xử lý.");
     }
   };
 
-  const handleShow = (student) => {
+  const handleShowModal = (student) => {
     setSelectedStudent(student);
     setShowModal(true);
   };
 
-  const handleClassroomChange = (e) => {
-    setSelectedClassroomId(e.target.value);
-  };
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (page < Math.ceil(totalStudents / limit)) {
-      setPage(page + 1);
-    }
-  };
+  const classroomOptions = [
+    { value: "", label: "Chọn lớp học" },
+    ...classrooms.map(c => ({
+      value: c.id,
+      label: c.name
+    }))
+  ];
 
   return (
     <div className="container mt-5 shadow-sm rounded p-3">
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="m-0">Danh sách học sinh</h2>
         <input
-          className="form-control form-control-sm w-25"
+          className="form-control form-control w-25"
           placeholder="Nhập tên học sinh"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -93,19 +73,20 @@ function StudentListFunc() {
 
       <div className="mt-2 d-flex align-items-center">
         <h5 className="m-0">Tìm học sinh theo lớp:</h5>
-        <select
-          style={{ width: 115 }}
-          className="form-select form-select-sm ms-3"
-          value={selectedClassroomId}
-          onChange={handleClassroomChange}
-        >
-          <option value="">Chọn lớp</option>
-          {classrooms.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <Select
+          options={classroomOptions}
+          value={selectedClassroom}
+          onChange={option => setSelectedClassroom(option)}
+          placeholder="Chọn lớp học"
+          styles= {{
+            container: (provided) => ({
+              ...provided,
+              width: '160px',
+              marginLeft: '1rem',
+              fontSize: '0.850rem',
+            }),
+          }}
+        />
       </div>
 
       <div className="mt-2 d-flex">
@@ -158,7 +139,7 @@ function StudentListFunc() {
                 </Link>
                 <button
                   className="btn btn-danger btn-sm pr-3"
-                  onClick={() => handleShow(s)}
+                  onClick={() => handleShowModal(s)}
                 >
                   Xóa
                 </button>
@@ -169,7 +150,7 @@ function StudentListFunc() {
       </Table>
       <div className="d-flex justify-content-between mt-3">
         <Button
-          onClick={handlePrevPage}
+          onClick={() => setPage(page - 1)}
           disabled={page === 1}
           className="btn btn-primary btn-sm"
         >
@@ -179,33 +160,21 @@ function StudentListFunc() {
           Trang {page} trên {Math.ceil(totalStudents / limit)}
         </span>
         <Button
-          onClick={handleNextPage}
+          onClick={() => setPage(page + 1)}
           disabled={page === Math.ceil(totalStudents / limit)}
           className="btn btn-primary btn-sm"
         >
           Trang sau
         </Button>
       </div>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Xác nhận xoá</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Bạn có chắc muốn xoá học sinh{" "}
-          <span className="fw-bold">{selectedStudent?.name}</span> không?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            className="btn-sm"
-            variant="danger"
-            onClick={() => deleteStudent(selectedStudent.id)}
-          >
-            Xoá
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <DeleteStudentModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        student={selectedStudent}
+        onDelete={handleDeleteStudent}
+      />
     </div>
   );
-}
+};
 
 export default StudentListFunc;

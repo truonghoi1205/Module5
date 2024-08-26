@@ -4,7 +4,7 @@ const URL_STUDENT = "http://localhost:8080/students"
 
 export const getAllStudents = async (name, classroomId, minPoint, maxPoint, page, limit) => {
     try {
-        let url = `http://localhost:8080/students?_expand=classroom&_page=${page}&_limit=${limit}`;
+        let url = `http://localhost:8080/students?_expand=classroom&_sort=name&_order=desc`;
         
         if (name) {
             url += `&name_like=${name}`;
@@ -15,7 +15,9 @@ export const getAllStudents = async (name, classroomId, minPoint, maxPoint, page
         if (minPoint !== "" && maxPoint !== "") {
             url += `&point_gte=${minPoint}&point_lte=${maxPoint}`;
         }
-        
+        if(page,limit) {
+            url += `&_page=${page}&_limit=${limit}`;
+        }
         let res = await axios.get(url);
         return {
             data: res.data,

@@ -4,8 +4,7 @@ import StudentListFunc from "./components/student/StudentListFunc";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
-import StudentUpdate from './pages/StudentUpdate';
-import StudentCreate from './pages/StudentCreate';
+import StudentForm from './pages/StudentForm';
 
 
 function App() {
@@ -14,9 +13,9 @@ function App() {
         <BrowserRouter>
           
           <Routes>
-            <Route path="/create" element={<StudentCreate />} />
+            <Route path="/create" element={<StudentForm/>} />
             <Route path="/students" element={<StudentListFunc/>} />
-            <Route path="/edit/:id" element={<StudentUpdate/>} />
+            <Route path="/edit/:id" element={<StudentForm isUpdate={true} />} />
           </Routes>
         </BrowserRouter>
         <ToastContainer />

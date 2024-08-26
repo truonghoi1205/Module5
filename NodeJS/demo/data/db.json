@@ -1,53 +1,46 @@
 {
   "students": [
     {
-      "id": 2,
-      "name": "HaiTT2",
-      "address": "Quảng Nam",
+      "name": "Trần C",
+      "address": "Đà Nẵng",
       "point": 5,
-      "classroomId": 1
-    },
-    {
-      "name": "Nhất ngu",
-      "address": "Quảng Nam",
-      "point": 7,
       "classroomId": 3,
       "id": 3
     },
     {
-      "name": "Tri",
-      "address": "ád",
-      "point": 6,
-      "classroomId": "1",
+      "name": "Nguyễn Thị A",
+      "address": "Hà Nội",
+      "point": 9.5,
+      "classroomId": 3,
       "id": 4
     },
     {
-      "name": "2aa",
-      "address": "2",
-      "point": 1,
-      "classroomId": "2",
+      "name": "Đinh Văn N",
+      "address": "Hồ Chí Minh",
+      "point": 6,
+      "classroomId": 2,
       "id": 5
     },
     {
-      "name": "Mâm xôi",
+      "name": "Phạm B",
       "address": "Quảng Nam",
       "point": 8.5,
-      "classroomId": "3",
+      "classroomId": 1,
       "id": 6
     },
     {
-      "name": "ass",
-      "address": "a",
-      "point": 2,
-      "classroomId": "1",
-      "id": 7
+      "name": "Nguyễn E",
+      "address": "Quảng Nam",
+      "point": 3,
+      "classroomId": 1,
+      "id": 8
     },
     {
-      "name": "Mâm xôi",
-      "address": "Quảng Nam",
+      "name": "222",
+      "address": "2",
       "point": 2,
-      "classroomId": "2",
-      "id": 8
+      "classroomId": 2,
+      "id": 9
     }
   ],
   "classrooms": [
