@@ -2,9 +2,10 @@ import axios from "axios";
 
 const URL_STUDENT = "http://localhost:8080/students"
 
-export const getAllStudents = async (name, classroomId, minPoint, maxPoint) => {
+export const getAllStudents = async (name, classroomId, minPoint, maxPoint, page, limit) => {
     try {
-        let url = `http://localhost:8080/students?_expand=classroom`;
+        let url = `http://localhost:8080/students?_expand=classroom&_page=${page}&_limit=${limit}`;
+        
         if (name) {
             url += `&name_like=${name}`;
         }
@@ -16,11 +17,18 @@ export const getAllStudents = async (name, classroomId, minPoint, maxPoint) => {
         }
         
         let res = await axios.get(url);
-        return res.data;
+        return {
+            data: res.data,
+            total: res.headers['x-total-count'] 
+        };
     } catch (e) {
-        return []
+        return {
+            data: [],
+            total: 0
+        };
     }
 }
+
 
 export const saveStudent = async (student) => {
     try {

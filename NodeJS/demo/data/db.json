@@ -8,11 +8,11 @@
       "classroomId": 1
     },
     {
-      "id": 3,
       "name": "Nhất ngu",
       "address": "Quảng Nam",
       "point": 7,
-      "classroomId": 2
+      "classroomId": 3,
+      "id": 3
     },
     {
       "name": "Tri",
@@ -27,6 +27,27 @@
       "point": 1,
       "classroomId": "2",
       "id": 5
+    },
+    {
+      "name": "Mâm xôi",
+      "address": "Quảng Nam",
+      "point": 8.5,
+      "classroomId": "3",
+      "id": 6
+    },
+    {
+      "name": "ass",
+      "address": "a",
+      "point": 2,
+      "classroomId": "1",
+      "id": 7
+    },
+    {
+      "name": "Mâm xôi",
+      "address": "Quảng Nam",
+      "point": 2,
+      "classroomId": "2",
+      "id": 8
     }
   ],
   "classrooms": [

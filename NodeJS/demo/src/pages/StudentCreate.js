@@ -36,8 +36,6 @@ export default function StudentCreate() {
 
   const saveStudent = async (values) => {
     try {
-      values.point = +values.point; 
-      values.classroomId = +values.classroomId; 
       const isSuccess = await studentService.saveStudent(values);
       if (isSuccess) {
         toast.success("Thêm mới thành công");

@@ -14,20 +14,29 @@ function StudentListFunc() {
   const [maxPoint, setMaxPoint] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [totalStudents, setTotalStudents] = useState(0);
+
+  useEffect(() => {
+    getAllClassrooms();
+  }, []);
 
   useEffect(() => {
     getAllStudents();
-    getAllClassrooms();
-  }, [name, selectedClassroomId, minPoint, maxPoint]);
+  }, [page, name, selectedClassroomId, minPoint, maxPoint]);
 
   const getAllStudents = async () => {
-    let res = await studentService.getAllStudents(
+    let { data, total } = await studentService.getAllStudents(
       name,
       selectedClassroomId,
       minPoint,
-      maxPoint
+      maxPoint,
+      page,
+      limit
     );
-    setStudents(res);
+    setStudents(data);
+    setTotalStudents(total);
   };
 
   const getAllClassrooms = async () => {
@@ -53,6 +62,18 @@ function StudentListFunc() {
 
   const handleClassroomChange = (e) => {
     setSelectedClassroomId(e.target.value);
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < Math.ceil(totalStudents / limit)) {
+      setPage(page + 1);
+    }
   };
 
   return (
@@ -146,7 +167,25 @@ function StudentListFunc() {
           ))}
         </tbody>
       </Table>
-
+      <div className="d-flex justify-content-between mt-3">
+        <Button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          className="btn btn-primary btn-sm"
+        >
+          Trang trước
+        </Button>
+        <span>
+          Trang {page} trên {Math.ceil(totalStudents / limit)}
+        </span>
+        <Button
+          onClick={handleNextPage}
+          disabled={page === Math.ceil(totalStudents / limit)}
+          className="btn btn-primary btn-sm"
+        >
+          Trang sau
+        </Button>
+      </div>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Xác nhận xoá</Modal.Title>
